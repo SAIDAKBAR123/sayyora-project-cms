@@ -33,7 +33,9 @@
       <v-btn small text fab @click.stop="drawer = !drawer"><v-icon>mdi-bullseye</v-icon></v-btn>
       <v-toolbar-title class="pl-1"> UMUMIY TIZIM</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn color="red darken-2" elevation="0">Chiqish</v-btn>
+      <v-avatar size="50" class="mr-4"><v-img contain :src="require('./assets/user_image.png')"></v-img></v-avatar>
+      <span class="nameofUser">Sayyora Rahimova</span>
+      <!-- <v-btn color="red darken-2" elevation="0">Chiqish</v-btn> -->
     </v-app-bar>
 
     <v-content>
@@ -62,3 +64,10 @@ export default {
   }
 }
 </script>
+<style scoped>
+.nameofUser{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(51, 173, 230);
+  font-weight: 500;
+}
+</style>
