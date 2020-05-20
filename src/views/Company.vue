@@ -113,7 +113,14 @@ export default {
   },
   methods: {
     qoshish () {
-      console.log(this.newCompany)
+      if (this.newCompany.name && this.newCompany.type && this.newCompany.quantity) {
+        this.desserts.push(this.newCompany)
+        this.newCompany = {
+          name: '',
+          type: 'paper',
+          quantity: 1000
+        }
+      }
     }
   }
 }
