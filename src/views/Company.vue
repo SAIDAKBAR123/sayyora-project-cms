@@ -6,7 +6,7 @@
         <v-card>
           <v-card-text>
             <v-row justify="space-between" align="center">
-              <v-col cols="4">
+              <v-col cols="3">
                 <v-text-field
                   v-model="newCompany.name"
                   label="Kompaniya Nomi"
@@ -19,7 +19,14 @@
                   label="Foaliyat turi"
                 ></v-select>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="2">
+                     <v-select
+                v-model="newCompany.region"
+                  :items="['Toshkent', 'Andijon', 'Buxoro', 'Samarqand','Sirdaryo']"
+                  label="Foaliyat turi"
+                ></v-select>
+              </v-col>
+              <v-col cols="2">
                 <p class="headline">{{ newCompany.quantity }} so'm/Kg</p>
                 <v-slider
                   v-model="newCompany.quantity"
@@ -49,6 +56,7 @@
           <tr>
             <th class="text-left">Kompaniya nomi</th>
             <th class="text-left">Yo'nalishi</th>
+             <th class="text-left">Viloyat yoki Shahar</th>
             <th class="text-left">Narxi</th>
             <th class="text-left">Actions</th>
           </tr>
@@ -57,7 +65,9 @@
           <tr v-for="(item,i) in desserts" :key="i">
             <td>{{ item.name }}</td>
             <td>{{ item.type }}</td>
+             <td>{{ item.region }}</td>
             <td>
+                <p class="headline pb-0">{{ item.quantity }} so'm/Kg</p>
               <v-slider
                 v-model="item.quantity"
                 max="10000"
@@ -69,7 +79,6 @@
                 min="1000"
               >
               </v-slider>
-              <p class="headline">{{ item.quantity }} so'm/Kg</p>
             </td>
             <td>
               <v-btn small color="blue darken-2" fab
@@ -90,22 +99,26 @@ export default {
       newCompany: {
         name: '',
         type: 'paper',
-        quantity: 1000
+        quantity: 1000,
+        region: null
       },
       desserts: [
         {
           name: 'Yangi yul Metalurgiya OOO',
           type: 'metall',
+          region: 'Yangi Yul',
           quantity: 2500
         },
         {
           name: 'Yangi yul Metalurgiya OOO',
           type: 'metall',
+          region: 'Samarkand',
           quantity: 3900
         },
         {
-          name: 'Yangi yul Metalurgiya OOO',
+          name: 'Tashkent Metalurgiya OOO',
           type: 'metall',
+          region: 'Tashkent',
           quantity: 1300
         }
       ]
@@ -118,7 +131,8 @@ export default {
         this.newCompany = {
           name: '',
           type: 'paper',
-          quantity: 1000
+          quantity: 1000,
+          region: null
         }
       }
     }

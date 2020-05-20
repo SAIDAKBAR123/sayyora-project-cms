@@ -30,7 +30,7 @@
       clipped-left
     >
       <!-- <v-app-bar-nav-icon  @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
-      <v-btn small fab @click.stop="drawer = !drawer"><v-icon>mdi-bullseye</v-icon></v-btn>
+      <v-btn small text fab @click.stop="drawer = !drawer"><v-icon>mdi-bullseye</v-icon></v-btn>
       <v-toolbar-title class="pl-1"> UMUMIY TIZIM</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn color="red darken-2" elevation="0">Chiqish</v-btn>
