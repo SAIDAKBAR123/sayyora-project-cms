@@ -14,19 +14,23 @@
               </v-col>
               <v-col cols="3">
                 <v-select
+                  return-object
                 v-model="newCompany.type"
-                  :items="['qogoz', 'metall', 'plastik', 'shisha']"
+                  :items="service"
+                  item-text="name"
                   label="Foaliyat turi"
                 ></v-select>
               </v-col>
               <v-col cols="2">
-                     <v-select
-                v-model="newCompany.region"
-                  :items="['Toshkent', 'Andijon', 'Buxoro', 'Samarqand','Sirdaryo']"
-                  label="Foaliyat turi"
+                <v-select
+                  return-object
+                  v-model="newCompany.region"
+                  :items="viloyat"
+                  item-text="name"
+                  label="Viloyat"
                 ></v-select>
               </v-col>
-              <v-col cols="2">
+              <v-col  cols="2">
                 <p class="headline">{{ newCompany.quantity }} so'm/Kg</p>
                 <v-slider
                   v-model="newCompany.quantity"
@@ -67,7 +71,7 @@
             <td>{{ item.type }}</td>
              <td>{{ item.region }}</td>
             <td>
-                <p class="headline pb-0">{{ item.quantity }} so'm/Kg</p>
+                <p class="headline pb-0">{{ item.quantity }} so'm / Kg</p>
               <v-slider
                 v-model="item.quantity"
                 max="10000"
@@ -84,6 +88,7 @@
               <v-btn small color="blue darken-2" fab
                 ><v-icon>mdi-pen</v-icon></v-btn
               >
+              <v-btn text color="primary">E'lon qilish</v-btn>
             </td>
           </tr>
         </tbody>
@@ -93,15 +98,20 @@
 </template>
 
 <script>
+import Post from '../services/Post'
+import Get from '../services/Get'
+
 export default {
   data () {
     return {
       newCompany: {
         name: '',
-        type: 'paper',
+        type: null,
         quantity: 1000,
         region: null
       },
+      service: [],
+      viloyat: [],
       desserts: [
         {
           name: 'Yangi yul Metalurgiya OOO',
@@ -125,9 +135,22 @@ export default {
     }
   },
   methods: {
+    companyList () {
+      Get.getAllCompanyList().then(res => {
+        console.log(res)
+      }).catch(err => console.log(err))
+    },
+
     qoshish () {
       if (this.newCompany.name && this.newCompany.type && this.newCompany.quantity) {
-        this.desserts.push(this.newCompany)
+        console.log(this.newCompany)
+
+        Post.createCompany({
+          name: this.newCompany.name,
+          regionId: this.newCompany.region.id
+        }).then(() => {
+          // Post.createCompany2()
+        }).catch(err => { console.log(err) })
         this.newCompany = {
           name: '',
           type: 'paper',
@@ -135,7 +158,20 @@ export default {
           region: null
         }
       }
+    },
+    viloyatlar () {
+      Get.getAllRegions().then(res => {
+        console.log(res)
+        this.viloyat = res
+      }).catch(err => console.log(err))
+      Get.getAllServices().then(res => {
+        this.service = res
+      })
     }
+  },
+  created () {
+    this.viloyatlar()
+    this.companyList()
   }
 }
 </script>
