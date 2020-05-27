@@ -118,18 +118,6 @@ export default {
           type: 'metall',
           region: 'Yangi Yul',
           quantity: 2500
-        },
-        {
-          name: 'Yangi yul Metalurgiya OOO',
-          type: 'metall',
-          region: 'Samarkand',
-          quantity: 3900
-        },
-        {
-          name: 'Tashkent Metalurgiya OOO',
-          type: 'metall',
-          region: 'Tashkent',
-          quantity: 1300
         }
       ]
     }
@@ -137,31 +125,25 @@ export default {
   methods: {
     companyList () {
       Get.getAllCompanyList().then(res => {
-        console.log(res)
+        this.desserts = res
       }).catch(err => console.log(err))
     },
 
     qoshish () {
       if (this.newCompany.name && this.newCompany.type && this.newCompany.quantity) {
-        console.log(this.newCompany)
-
         Post.createCompany({
           name: this.newCompany.name,
           regionId: this.newCompany.region.id
-        }).then(() => {
-          // Post.createCompany2()
+        }).then((res) => {
+          Post.createCompany2(this.newCompany.type.id, { companyId: res.insertId, price: this.newCompany.quantity }).then(res => {
+            console.log(res)
+            this.getAllCompanyList()
+          })
         }).catch(err => { console.log(err) })
-        this.newCompany = {
-          name: '',
-          type: 'paper',
-          quantity: 1000,
-          region: null
-        }
       }
     },
     viloyatlar () {
       Get.getAllRegions().then(res => {
-        console.log(res)
         this.viloyat = res
       }).catch(err => console.log(err))
       Get.getAllServices().then(res => {
