@@ -71,9 +71,9 @@
             <td>{{ item.type }}</td>
              <td>{{ item.region }}</td>
             <td>
-                <p class="headline pb-0">{{ item.quantity }} so'm / Kg</p>
+                <p class="headline pb-0">{{ item.price }} so'm / Kg</p>
               <v-slider
-                v-model="item.quantity"
+                v-model="item.price"
                 max="10000"
                 step="200"
                 class="py-0"
@@ -125,6 +125,7 @@ export default {
   methods: {
     companyList () {
       Get.getAllCompanyList().then(res => {
+        console.log(res)
         this.desserts = res
       }).catch(err => console.log(err))
     },
@@ -135,9 +136,9 @@ export default {
           name: this.newCompany.name,
           regionId: this.newCompany.region.id
         }).then((res) => {
-          Post.createCompany2(this.newCompany.type.id, { companyId: res.insertId, price: this.newCompany.quantity }).then(res => {
+          Post.createCompany2(this.newCompany.type.id, { companyId: res[0].insertId, price: this.newCompany.quantity }).then(res => {
             console.log(res)
-            this.getAllCompanyList()
+            this.companyList()
           })
         }).catch(err => { console.log(err) })
       }
